@@ -6,9 +6,67 @@
     <title>Typing Test</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+
+    <style>
+        .words {
+            border: 1px solid black;
+            border-radius: 5px;
+            height: 200px;
+            margin-bottom: 20px;
+            padding: 5px;
+            overflow: hidden;
+            width: 400px;
+        }
+
+        .word-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+
+            -web-kit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .word-item {
+            display: inline-block;
+            font-size: 20px;
+            line-height: 24px;
+            padding: 5px;
+        }
+
+        .highlight {
+            background-color: #ddd;
+            border-radius: 4px;
+        }
+
+        .correct {
+            color: #0f0 !important;
+        }
+
+        .wrong {
+            background-color: #f00 !important;
+        }
+
+    </style>
 </head>
 <body>
+    <section id="type-test-app">
+        <section class="words">
+            <ul class="word-list"></ul>
+        </section>
+        <section class="controls">
+            <input class="edit" type="text" placeholder="Start typing">
+        </section>
+    </section>
 
+    <!-- templates -->
+    <script type="text/template" id="word-template">
+        <span class="<%= matched ? 'correct' : '' %>"><%- text %></span>
+    </script>
+
+    <!-- app entry point -->
     <script src="main.js"></script>
 </body>
 </html>
