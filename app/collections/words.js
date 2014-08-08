@@ -17,7 +17,7 @@ define([
 
         // fetch handlers
         _fetchSuccess: function(collection, response) {
-            console.log('Collection models:', collection.models);
+            //console.log('Collection models:', collection.models);
         },
         _fetchError: function(collection, response) {
             console.error('Words fetch error');

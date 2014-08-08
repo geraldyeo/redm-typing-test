@@ -37,9 +37,14 @@ define([
 
             if (e.which === SPACE_KEY) {
                 // all ok...
-                if (this._checkWord(this._currentWord, $target)) {
-                    EventBus.trigger(EventBus.WORD_MATCHED, this._currentWord);
+                if (this._checkWord(this._currentWord, $target, true)) {
                     $target.val('');
+                    this._currentWord.set('matched', true);
+
+                    EventBus.trigger(EventBus.WORD_MATCHED);
+                } else {
+                    // wrong somewhere...
+                    EventBus.trigger(EventBus.WORD_ERROR, this._currentWord);
                 }
             } else {
                 if (this._checkWord(this._currentWord, $target)) {
@@ -52,7 +57,7 @@ define([
             }
         },
 
-        _checkWord: function(word, $input) {
+        _checkWord: function(word, $input, len) {
             var wordStr = $.trim(word.get('text')),
                 userInput = $.trim($input.val());
 
@@ -62,7 +67,7 @@ define([
                 }
             }
 
-            return true;
+            return true && (len ? (wordStr.length === userInput.length) : true);
         }
 
     });

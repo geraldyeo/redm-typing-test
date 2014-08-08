@@ -16,10 +16,10 @@ define([
         template: _.template($('#word-template').html()),
 
         initialize: function() {
-            _(this).bindAll('_updateHighlight', '_updateMatched', '_updateError');
+            _(this).bindAll('_updateHighlight', '_updateError');
 
+            // @todo: Is it better to listen inside WordsView?
             EventBus.on(EventBus.CURRENT_WORD, this._updateHighlight);
-            EventBus.on(EventBus.WORD_MATCHED, this._updateMatched);
             EventBus.on(EventBus.WORD_ERROR, this._updateError);
 
             this.listenTo(this.model, 'change', this.render);
@@ -28,14 +28,9 @@ define([
         _updateHighlight: function(model) {
             if (this.model.cid === model.cid) {
                 this.$el.addClass('highlight');
+                EventBus.trigger(EventBus.WORD_POSITION, this.$el.position());
             } else {
                 this.$el.removeClass('highlight');
-            }
-        },
-
-        _updateMatched: function(model) {
-            if (this.model.cid === model.cid) {
-                this.$el.addClass('correct');
             }
         },
 

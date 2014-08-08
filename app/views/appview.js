@@ -11,8 +11,6 @@ define([
     var AppView = Backbone.View.extend({
 
         initialize: function() {
-            console.log('Yay! App View!');
-
             // child views references
             this._wordsView = new WordsView({
                 collection: this.collection,

@@ -25,12 +25,16 @@ define([
     var _fetchSuccess = function(collection, response) {
         _collection = collection;
 
+        // set app view to element
         new AppView({
             collection: collection,
             el: $("#type-test-app")
         });
 
+        // listen for matched
         EventBus.on(EventBus.WORD_MATCHED, _nextWord);
+
+        // advance index
         _nextWord();
     };
 

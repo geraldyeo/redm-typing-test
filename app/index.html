@@ -13,25 +13,32 @@
             border-radius: 5px;
             height: 200px;
             margin-bottom: 20px;
+            padding: 5px;
             overflow: hidden;
             width: 400px;
         }
 
         .word-list {
             list-style: none;
-            margin: 1%;
+            margin: 0;
             padding: 0;
-            width: 98%;
+            width: 100%;
+
+            -web-kit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
         }
 
         .word-item {
             display: inline-block;
             font-size: 20px;
+            line-height: 24px;
             padding: 5px;
         }
 
         .highlight {
             background-color: #ddd;
+            border-radius: 4px;
         }
 
         .correct {
