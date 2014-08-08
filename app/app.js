@@ -16,15 +16,13 @@ define([
      * Start fetching json, and create the app view on success.
      */
     var _init = function() {
-        var words = new WordsCollection();
-        words.fetch({
+        _collection = new WordsCollection();
+        _collection.fetch({
             success: _fetchSuccess
         });
     };
 
     var _fetchSuccess = function(collection, response) {
-        _collection = collection;
-
         // set app view to element
         new AppView({
             collection: collection,
@@ -40,7 +38,17 @@ define([
 
     var _nextWord = function() {
         _index += 1;
-        EventBus.trigger(EventBus.CURRENT_WORD, _collection.at(_index));
+
+        if (_index < _collection.length) {
+            EventBus.trigger(EventBus.CURRENT_WORD, _collection.at(_index));
+        } else {
+            _testCompleted();
+        }
+
+    };
+
+    var _testCompleted = function() {
+
     };
 
     /**
