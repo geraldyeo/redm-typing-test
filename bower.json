@@ -1,0 +1,26 @@
+{
+    "name": "typing-test",
+    "version": "0.0.0",
+    "authors": [
+        "Gerald Yeo <gerald.yeo@gmail.com>"
+    ],
+    "description": "Frontend assessment",
+    "main": "main.js",
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "app/bower",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "jquery": null,
+        "backbone": null,
+        "lodash": null,
+        "requirejs": null,
+        "almond": null
+    }
+}
