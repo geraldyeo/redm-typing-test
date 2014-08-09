@@ -8,9 +8,7 @@ define(['backbone'], function(Backbone) {
 
         // toggle the 'matched' state of word item
         toggle: function() {
-            this.save({
-                matched: !this.get('matched')
-            });
+            this.set('matched', !this.get('matched'));
         }
     });
 

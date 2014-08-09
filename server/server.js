@@ -3,8 +3,6 @@
 var express = require("express"),
     http = require("http"),
     port = (process.env.PORT || 8001),
-    bodyParser = require('body-parser'),
-    methodOverride = require('method-override'),
     server = module.exports = express();
 
 // SERVER CONFIGURATION
@@ -17,8 +15,6 @@ function errorHandler(err, req, res, next) {
 }
 
 server.use(express.static(__dirname + '/../public'));
-server.use(bodyParser());
-server.use(methodOverride());
 server.use(errorHandler);
 
 // SERVER

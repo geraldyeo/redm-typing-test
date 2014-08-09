@@ -36,6 +36,12 @@ module.exports = function(grunt) {
             }
         },
 
+        nodemon: {
+            dev: {
+                script: 'server/server.js'
+            }
+        },
+
         watch: {
             options: {
                 livereload: 35729
@@ -53,9 +59,16 @@ module.exports = function(grunt) {
                 tasks: ['clean:css', 'compass:dev', 'autoprefixer']
             }
         },
+
+        concurrent: {
+            options: {
+                logConcurrentOutput: true
+            },
+            serverwatch: ['nodemon', 'watch']
+        },
     });
 
-    grunt.registerTask('default', ['requirejs', 'processhtml', 'copy', 'watch']);
+    grunt.registerTask('default', ['requirejs', 'processhtml', 'copy', 'concurrent:serverwatch']);
 
     grunt.registerTask('dist', ['requirejs', 'processhtml', 'copy']);
 };
