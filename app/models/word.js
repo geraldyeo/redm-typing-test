@@ -3,12 +3,8 @@ define(['backbone'], function(Backbone) {
         // default attributes
         defaults: {
             text: '',
-            matched: false
-        },
-
-        // toggle the 'matched' state of word item
-        toggle: function() {
-            this.set('matched', !this.get('matched'));
+            matched: false,
+            passed: false
         }
     });
 

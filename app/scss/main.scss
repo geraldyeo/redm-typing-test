@@ -50,8 +50,6 @@
     position: relative;
     padding: 0;
     width: 100%;
-    -web-kit-transition: all 0.5s ease-in-out;
-    -moz-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
 .word-item {
@@ -66,11 +64,14 @@
     border-radius: 4px;
     font-style: italic;
 }
+.wrong {
+    background-color: #f00 !important;
+}
 .correct {
     color: #0f0 !important;
 }
-.wrong {
-    background-color: #f00 !important;
+.pass {
+    color: #f00 !important;
 }
 .countdown-container {
     margin-top: 20px;

@@ -14,7 +14,6 @@ define([
     var _collection;
     var _reportModel;
     var _index = -1;
-    var _numWrong = 0;
 
     /**
      * Start fetching json, and create the app view on success.
@@ -29,7 +28,6 @@ define([
     };
 
     var _fetchSuccess = function(collection, response) {
-        console.log(_reportModel);
         // set app view to element
         _appView = new AppView({
             collection: _collection,
@@ -40,9 +38,9 @@ define([
 
         // listen for matched
         EventBus.on(EventBus.WORD_MATCHED, _nextWord);
+        EventBus.on(EventBus.WORD_UNMATCHED, _nextWord);
         EventBus.on(EventBus.TIMES_UP, _testCompleted);
         EventBus.on(EventBus.RESTART, _testRestarted);
-        EventBus.on(EventBus.WORD_ERROR, _countWrong);
 
         // advance index
         _nextWord();
@@ -58,33 +56,34 @@ define([
         }
     };
 
-    var _countWrong = function(word) {
-        if (word) {
-            _numWrong += 1;
-        }
-    };
-
     var _testCompleted = function() {
-        var count = 0;
+        var i = 0,
+            correctCount = 0,
+            wrongCount = 0;
+
         _collection.each(function(model) {
-            count += model.get('matched') ? 1 : 0;
+            if (i <= _index) {
+                correctCount += model.get('matched') ? 1 : 0;
+                wrongCount += model.get('passed') ? 1 : 0;
+                i++;
+            }
         });
 
-        _reportModel.set('numCorrect', count);
-        _reportModel.set('numWrong', _numWrong);
+        _reportModel.set('numCorrect', correctCount);
+        _reportModel.set('numWrong', wrongCount);
 
-        console.log('words correct:', count);
-        console.log('typed wrong:', _numWrong);
+        console.log('words correct:', correctCount);
+        console.log('words wrong:', wrongCount);
     };
 
     var _testRestarted = function() {
         _collection.each(function(model) {
             model.set('matched', false);
+            model.set('passed', false);
         });
 
         _appView.removeReport();
 
-        _numWrong = 0;
         _index = -1;
         _nextWord();
     };

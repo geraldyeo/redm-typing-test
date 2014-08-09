@@ -68,8 +68,10 @@ define([
 
                     EventBus.trigger(EventBus.WORD_MATCHED);
                 } else {
-                    // wrong somewhere...
-                    EventBus.trigger(EventBus.WORD_ERROR, this._currentWord);
+                    $target.val('');
+                    this._currentWord.set('passed', true);
+
+                    EventBus.trigger(EventBus.WORD_UNMATCHED);
                 }
             } else {
                 if (this._checkWord(this._currentWord, $target)) {

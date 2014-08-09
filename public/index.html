@@ -28,7 +28,7 @@
 
     <!-- templates -->
     <script type="text/template" id="word-template">
-        <span class="<%= matched ? 'correct' : '' %>"><%- text %></span>
+        <span class="<%= matched ? 'correct' : '' %> <%= passed ? 'pass' : '' %>"><%- text %></span>
     </script>
 
     <script type="text/template" id="countdown-template">
@@ -37,7 +37,7 @@
     </script>
 
     <script type="text/template" id="report-template">
-        <p>You have got <%- numCorrect %> of word<%= numCorrect > 1 ? 's':'' %> correct, and <%- numWrong %> wrong characters.</p>
+        <p>You have got <%- numCorrect %> word<%= numCorrect > 1 ? 's':'' %> correct, and <%- numWrong %> word<%= numWrong > 1 ? 's':'' %> wrong</p>
     </script>
 
     <!-- app entry point -->
