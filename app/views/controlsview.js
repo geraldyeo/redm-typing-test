@@ -3,27 +3,51 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'eventbus'
+    'eventbus',
+    'models/countdown',
+    'views/countdownview'
 
-], function($, _, Backbone, EventBus, undef) {
+], function($, _, Backbone, EventBus, CountdownModel, CountdownView, undef) {
 
     var SPACE_KEY = 32;
 
     var ControlsView = Backbone.View.extend({
         // current word model
         _currentWord: undef,
+        _countdown: undef,
 
         events: {
-            "keyup .edit": '_checkOnSpace'
+            "keyup .edit": '_checkOnSpace',
+            "click .redo": '_restart'
         },
 
         initialize: function() {
-            _(this).bindAll('_updateCurrentWord', '_checkOnSpace');
+            _(this).bindAll('_updateCurrentWord', '_checkOnSpace', '_restart', '_preventUserInput');
+
+            this.$input = this.$el.find('.edit');
+
+            this._countdown = new CountdownView({
+                model: new CountdownModel()
+            });
+
             EventBus.on(EventBus.CURRENT_WORD, this._updateCurrentWord);
+            EventBus.on(EventBus.TIMES_UP, this._preventUserInput);
+
+            this.render();
         },
 
         _updateCurrentWord: function(word) {
             this._currentWord = word;
+        },
+
+        _restart: function(e) {
+            console.log('redo')
+            EventBus.trigger(EventBus.RESTART);
+        },
+
+        _preventUserInput: function() {
+            this.$input.val('');
+            this.$input.attr('disabled', 'disabled');
         },
 
         _checkOnSpace: function(e) {
@@ -55,6 +79,10 @@ define([
                     EventBus.trigger(EventBus.WORD_ERROR, this._currentWord);
                 }
             }
+
+            if (!this._countdown.model.get('started')) {
+                this._countdown.model.start();
+            }
         },
 
         _checkWord: function(word, $input, len) {
@@ -68,6 +96,11 @@ define([
             }
 
             return true && (len ? (wordStr.length === userInput.length) : true);
+        },
+
+        render: function() {
+            this.$el.append(this._countdown.render().el);
+            return this;
         }
 
     });

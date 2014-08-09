@@ -31,6 +31,8 @@ define([
 
         // listen for matched
         EventBus.on(EventBus.WORD_MATCHED, _nextWord);
+        EventBus.on(EventBus.TIMES_UP, _testCompleted);
+        EventBus.on(EventBus.RESTART, _testRestarted);
 
         // advance index
         _nextWord();
@@ -48,7 +50,20 @@ define([
     };
 
     var _testCompleted = function() {
+        var count = 0;
+        _collection.each(function(model) {
+            count += model.get('matched') ? 1 : 0;
+        });
+        console.log('words correct:', count);
+    };
 
+    var _testRestarted = function() {
+        _collection.each(function(model) {
+            model.set('matched', false);
+        });
+
+        _index = -1;
+        _nextWord();
     };
 
     /**

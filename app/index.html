@@ -7,6 +7,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
     <style>
         .words {
             border: 1px solid black;
@@ -31,6 +33,7 @@
 
         .word-item {
             display: inline-block;
+            font-family: 'Open Sans', sans-serif;
             font-size: 20px;
             line-height: 24px;
             padding: 5px;
@@ -66,13 +69,18 @@
         <span class="<%= matched ? 'correct' : '' %>"><%- text %></span>
     </script>
 
+    <script type="text/template" id="countdown-template">
+        <span class="countdown"><%- seconds %></span>
+        <button class="redo" type="reset"></button>
+    </script>
+
     <!-- app entry point -->
     <!-- build:js main.js -->
     <script data-main="main" src="bower/requirejs/require.js"></script>
     <!-- /build -->
 
     <!-- build:remove:dist -->
-    <script src="//localhost:35729/livereload.js"></script>
+    <!-- <script src="//localhost:35729/livereload.js"></script> -->
     <!-- /build -->
 </body>
 </html>
