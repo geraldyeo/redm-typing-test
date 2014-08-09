@@ -9,7 +9,7 @@ define([
 ], function($, _, Backbone, EventBus, WordView) {
 
     var WordsView = Backbone.View.extend({
-        _lastTop: 14, // magic number
+        _lastTop: 0,
 
         initialize: function() {
             _(this).bindAll('add', '_updateListPosition', '_reset');
@@ -37,7 +37,7 @@ define([
         },
 
         _reset: function() {
-            this._lastTop = 14;
+            this._lastTop = 0;
             this._$ul.css('margin-top', '');
         },
 
@@ -46,7 +46,7 @@ define([
                 var marginTop = parseInt(this._$ul.css('margin-top'));
                 this._$ul.css('margin-top', (marginTop - 34) + 'px');
 
-                this._lastTop = position.top - this._lastTop;
+                this._lastTop = position.top;
             }
         },
 

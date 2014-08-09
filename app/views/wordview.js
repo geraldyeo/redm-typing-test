@@ -21,6 +21,7 @@ define([
             // @todo: Is it better to listen inside WordsView?
             EventBus.on(EventBus.CURRENT_WORD, this._updateHighlight);
             EventBus.on(EventBus.WORD_ERROR, this._updateError);
+            EventBus.on(EventBus.RESTART, this._updateError);
 
             this.listenTo(this.model, 'change', this.render);
         },

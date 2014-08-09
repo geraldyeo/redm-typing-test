@@ -5,11 +5,14 @@ define([
     'backbone',
     'eventbus',
     'collections/words',
+    'models/report',
     'views/appview'
 
-], function($, _, Backbone, EventBus, WordsCollection, AppView) {
+], function($, _, Backbone, EventBus, WordsCollection, ReportModel, AppView) {
 
+    var _appView;
     var _collection;
+    var _reportModel;
     var _index = -1;
     var _numWrong = 0;
 
@@ -21,14 +24,19 @@ define([
         _collection.fetch({
             success: _fetchSuccess
         });
+
+        _reportModel = new ReportModel();
     };
 
     var _fetchSuccess = function(collection, response) {
+        console.log(_reportModel);
         // set app view to element
-        new AppView({
-            collection: collection,
+        _appView = new AppView({
+            collection: _collection,
             el: $("#type-test-app")
         });
+
+        _appView.addReport(_reportModel);
 
         // listen for matched
         EventBus.on(EventBus.WORD_MATCHED, _nextWord);
@@ -62,6 +70,9 @@ define([
             count += model.get('matched') ? 1 : 0;
         });
 
+        _reportModel.set('numCorrect', count);
+        _reportModel.set('numWrong', _numWrong);
+
         console.log('words correct:', count);
         console.log('typed wrong:', _numWrong);
     };
@@ -70,6 +81,8 @@ define([
         _collection.each(function(model) {
             model.set('matched', false);
         });
+
+        _appView.removeReport();
 
         _numWrong = 0;
         _index = -1;

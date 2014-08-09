@@ -4,9 +4,10 @@ define([
     'underscore',
     'backbone',
     'views/wordsview',
-    'views/controlsview'
+    'views/controlsview',
+    'views/reportview'
 
-], function($, _, Backbone, WordsView, ControlsView) {
+], function($, _, Backbone, WordsView, ControlsView, ReportView, undef) {
 
     var AppView = Backbone.View.extend({
 
@@ -22,6 +23,22 @@ define([
             });
 
             this.render();
+        },
+
+        addReport: function(model) {
+            if (!this._reportView) {
+                this._reportView = new ReportView({
+                    model: model,
+                    el: this.$el.find('.report')
+                });
+                this._reportView.$el.empty();
+            }
+        },
+
+        removeReport: function() {
+            if (this._reportView) {
+                this._reportView.$el.empty();
+            }
         },
 
         render: function() {

@@ -17,7 +17,30 @@ module.exports = function(grunt) {
             }
         },
 
+        compass: {
+            dev: {
+                options: {
+                    config: 'config.rb',
+                    sourcemap: true,
+                    environment: 'development'
+                }
+            }
+        },
+
+        autoprefixer: {
+            main: {
+                files: {
+                    'public/stylesheets/main.css': 'public/stylesheets/main.css'
+                }
+            }
+        },
+
         processhtml: {
+            dev: {
+                files: {
+                    'public/index.html': ['app/index.html']
+                }
+            },
             dist: {
                 files: {
                     'public/index.html': ['app/index.html']
@@ -38,7 +61,12 @@ module.exports = function(grunt) {
 
         nodemon: {
             dev: {
-                script: 'server/server.js'
+                script: 'server/server.js',
+                options: {
+                    ignore: ['node_modules/**', 'public/**'],
+                    ext: 'js,json',
+                    watch: ['server']
+                }
             }
         },
 
@@ -48,7 +76,7 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: ['app/**/*.{js,html}', '!**/node_modules/**'],
-                tasks: ['requirejs', 'processhtml']
+                tasks: ['requirejs', 'processhtml:dev']
             },
             json: {
                 files: ['app/**/*.json'],
@@ -56,7 +84,7 @@ module.exports = function(grunt) {
             },
             styles: {
                 files: ['app/scss/**/*.{scss,sass}'],
-                tasks: ['clean:css', 'compass:dev', 'autoprefixer']
+                tasks: ['compass', 'autoprefixer']
             }
         },
 
@@ -68,7 +96,7 @@ module.exports = function(grunt) {
         },
     });
 
-    grunt.registerTask('default', ['requirejs', 'processhtml', 'copy', 'concurrent:serverwatch']);
+    grunt.registerTask('default', ['requirejs', 'compass', 'autoprefixer', 'processhtml:dev', 'copy', 'concurrent:serverwatch']);
 
-    grunt.registerTask('dist', ['requirejs', 'processhtml', 'copy']);
+    grunt.registerTask('dist', ['requirejs', 'compass', 'autoprefixer', 'processhtml:dist', 'copy']);
 };

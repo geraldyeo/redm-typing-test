@@ -9,6 +9,7 @@ define([
 
     var CountdownView = Backbone.View.extend({
 
+        className: 'countdown-container',
         template: _.template($('#countdown-template').html()),
 
         initialize: function() {

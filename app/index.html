@@ -8,51 +8,8 @@
     <meta name="viewport" content="width=device-width">
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-
-    <style>
-        .words {
-            border: 1px solid black;
-            border-radius: 5px;
-            height: 200px;
-            margin-bottom: 20px;
-            padding: 5px;
-            overflow: hidden;
-            width: 400px;
-        }
-
-        .word-list {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-
-            -web-kit-transition: all 0.5s ease-in-out;
-            -moz-transition: all 0.5s ease-in-out;
-            transition: all 0.5s ease-in-out;
-        }
-
-        .word-item {
-            display: inline-block;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 20px;
-            line-height: 24px;
-            padding: 5px;
-        }
-
-        .highlight {
-            background-color: #ddd;
-            border-radius: 4px;
-        }
-
-        .correct {
-            color: #0f0 !important;
-        }
-
-        .wrong {
-            background-color: #f00 !important;
-        }
-
-    </style>
+    <link href='http://weloveiconfonts.com/api/?family=entypo' rel='stylesheet' type='text/css'>
+    <link href='stylesheets/main.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <section id="type-test-app">
@@ -60,7 +17,12 @@
             <ul class="word-list"></ul>
         </section>
         <section class="controls">
-            <input class="edit" type="text" placeholder="Start typing">
+            <div class="input-container">
+                <i class="entypo-keyboard"></i>
+                <input class="edit" type="text" placeholder="Start typing">
+            </div>
+        </section>
+        <section class="report">
         </section>
     </section>
 
@@ -70,8 +32,12 @@
     </script>
 
     <script type="text/template" id="countdown-template">
-        <span class="countdown"><%- seconds %></span>
-        <button class="redo" type="button"></button>
+        <span class="countdown"><%- mmss %></span>
+        <button class="redo" type="button"><i class="entypo-arrows-ccw"></i></button>
+    </script>
+
+    <script type="text/template" id="report-template">
+        <p>You have got <%- numCorrect %> of word<%= numCorrect > 1 ? 's':'' %> correct, and <%- numWrong %> wrong characters.</p>
     </script>
 
     <!-- app entry point -->
@@ -80,7 +46,7 @@
     <!-- /build -->
 
     <!-- build:remove:dist -->
-    <!-- <script src="//localhost:35729/livereload.js"></script> -->
+    <script src="//localhost:35729/livereload.js"></script>
     <!-- /build -->
 </body>
 </html>

@@ -41,7 +41,8 @@ define([
         },
 
         _restart: function(e) {
-            console.log('redo')
+            this.$input.val('');
+            this.$input.removeAttr('disabled');
             EventBus.trigger(EventBus.RESTART);
         },
 
