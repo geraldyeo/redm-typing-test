@@ -12,7 +12,7 @@ define([
         _lastTop: 14, // magic number
 
         initialize: function() {
-            _(this).bindAll('add', '_updateListPosition');
+            _(this).bindAll('add', '_updateListPosition', '_reset');
 
             this._$ul = this.$el.find('.word-list');
             this._children = [];
@@ -21,6 +21,7 @@ define([
             this.collection.bind('add', this.add);
 
             EventBus.on(EventBus.WORD_POSITION, this._updateListPosition);
+            EventBus.on(EventBus.RESTART, this._reset);
         },
 
         add: function(model) {
@@ -33,6 +34,11 @@ define([
             if (this._rendered) {
                 this._$ul.append(child.render().el);
             }
+        },
+
+        _reset: function() {
+            this._lastTop = 14;
+            this._$ul.css('margin-top', '');
         },
 
         _updateListPosition: function(position) {

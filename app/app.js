@@ -11,6 +11,7 @@ define([
 
     var _collection;
     var _index = -1;
+    var _numWrong = 0;
 
     /**
      * Start fetching json, and create the app view on success.
@@ -33,6 +34,7 @@ define([
         EventBus.on(EventBus.WORD_MATCHED, _nextWord);
         EventBus.on(EventBus.TIMES_UP, _testCompleted);
         EventBus.on(EventBus.RESTART, _testRestarted);
+        EventBus.on(EventBus.WORD_ERROR, _countWrong);
 
         // advance index
         _nextWord();
@@ -46,7 +48,12 @@ define([
         } else {
             _testCompleted();
         }
+    };
 
+    var _countWrong = function(word) {
+        if (word) {
+            _numWrong += 1;
+        }
     };
 
     var _testCompleted = function() {
@@ -54,7 +61,9 @@ define([
         _collection.each(function(model) {
             count += model.get('matched') ? 1 : 0;
         });
+
         console.log('words correct:', count);
+        console.log('typed wrong:', _numWrong);
     };
 
     var _testRestarted = function() {
@@ -62,6 +71,7 @@ define([
             model.set('matched', false);
         });
 
+        _numWrong = 0;
         _index = -1;
         _nextWord();
     };
